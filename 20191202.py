@@ -18,13 +18,15 @@ def walk_input(inputs):
         if inputs[i] == 99:
             break
 
-        indice_one = inputs[i+1]
-        indice_two = inputs[i+2]
-        indice_three = inputs[i+3]
-
         if inputs[i] == 1:
+            indice_one = inputs[i+1]
+            indice_two = inputs[i+2]
+            indice_three = inputs[i+3]
             inputs[indice_three] = inputs[indice_one] + inputs[indice_two]
         elif inputs[i] == 2:
+            indice_one = inputs[i+1]
+            indice_two = inputs[i+2]
+            indice_three = inputs[i+3]
             inputs[indice_three] = inputs[indice_one] * inputs[indice_two]
 
     return inputs
@@ -52,14 +54,34 @@ def test_walk_input():
     r = input_as_text(r)
     assert r == '30,1,1,4,2,5,6,0,99'
 
+    inputs = get_input_from_file('./20191202.txt')
+    inputs_parsed = convert_input(inputs[0])
+    inputs_parsed[1] = 66
+    inputs_parsed[2] = 35
+    r = walk_input(inputs_parsed)
+    assert r[0] == 19690720
+
 
 if __name__ == "__main__":
     # execute only if run as a script
     test_walk_input()
+    output = 0
+
     inputs = get_input_from_file('./20191202.txt')
-    print(inputs[0])
-    inputs_parsed = convert_input(inputs[0])
-    inputs_parsed[1] = 12
-    inputs_parsed[2] = 2
-    results = walk_input(inputs_parsed)
-    print(results[0])
+    tt = build_tree(convert_input(inputs[0]))
+
+    for i in range(0, 100):
+        for j in range(0, 100):
+            inputs = get_input_from_file('./20191202.txt')
+            inputs_parsed = convert_input(inputs[0])
+            inputs_parsed[1] = i
+            inputs_parsed[2] = j
+            results = walk_input(inputs_parsed)
+            # print('noun : {0} - verb : {1} - result : {2}'.format(i, j, results[0]))
+            if results[0] == 19690720:
+                print("FOUNDED ! ")
+                print(i)
+                print(j)
+                print(100*i+j)
+                print(results)
+                exit()
