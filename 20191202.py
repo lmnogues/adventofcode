@@ -62,6 +62,22 @@ def test_walk_input():
     assert r[0] == 19690720
 
 
+def build_tree(inputs):
+    input_tree = list()
+    i = 0
+    while i <= len(inputs)-1:
+        if inputs[i] == 1 or inputs[i] == 2:
+            nb_param = 3
+        if inputs[i] == 99:
+            nb_param = 0
+        start_slice = i+1
+        end_slice = start_slice+nb_param
+        input_tree.append({'pointer': inputs[i], 'parameters': inputs[start_slice:end_slice]})
+        i = end_slice
+
+    return input_tree
+
+
 if __name__ == "__main__":
     # execute only if run as a script
     test_walk_input()
