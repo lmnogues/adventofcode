@@ -62,19 +62,19 @@ def walk_input(inputs, opCode3_input):
             if paramCode_param1 == '2':
                 output_offset = offset
 
-        print(i, int(instr), valueA, valueB, offset)
+        #print(i, int(instr), valueA, valueB, offset)
 
         if opCode == '01':
             inputs[inputs[i+3]+output_offset] = valueA+valueB
-            print("writing {0} in position {1}".format(valueA+valueB, inputs[i+3]+output_offset))
+            #print("writing {0} in position {1}".format(valueA+valueB, inputs[i+3]+output_offset))
             i += 4
         elif opCode == '02':
             inputs[inputs[i+3]+output_offset] = valueA*valueB
-            print("writing {0} in position {1}".format(valueA*valueB, inputs[i+3]+output_offset))
+            #print("writing {0} in position {1}".format(valueA*valueB, inputs[i+3]+output_offset))
             i += 4
         elif opCode == '03':
             inputs[inputs[i+1]+output_offset] = opCode3_input
-            print("writing {0} in position {1}".format(opCode3_input, inputs[i+1]+output_offset))
+            #print("writing {0} in position {1}".format(opCode3_input, inputs[i+1]+output_offset))
             i += 2
         elif opCode == '04':
             returned_values.append(valueA)
@@ -92,23 +92,23 @@ def walk_input(inputs, opCode3_input):
         elif opCode == '07':
             if valueA < valueB:
                 inputs[inputs[i+3]+output_offset] = 1
-                print("writing {0} in position {1}".format(1, inputs[i+3]+output_offset))
+                #print("writing {0} in position {1}".format(1, inputs[i+3]+output_offset))
             else:
                 inputs[inputs[i+3]+output_offset] = 0
-                print("writing {0} in position {1}".format(0, inputs[i+3]+output_offset))
+                #print("writing {0} in position {1}".format(0, inputs[i+3]+output_offset))
             i += 4
         elif opCode == '08':
             if valueA == valueB:
                 inputs[inputs[i+3]+output_offset] = 1
-                print("writing {0} in position {1}".format(1, inputs[i+3]+output_offset))
+                #print("writing {0} in position {1}".format(1, inputs[i+3]+output_offset))
             else:
                 inputs[inputs[i+3]+output_offset] = 0
-                print("writing {0} in position {1}".format(1, inputs[i+3]+output_offset))
+                #print("writing {0} in position {1}".format(1, inputs[i+3]+output_offset))
             i += 4
         elif opCode == '09':
-            #print("instr : {0} - rel_base {1} - value {2}".format(instr, offset, valueA))
+            ##print("instr : {0} - rel_base {1} - value {2}".format(instr, offset, valueA))
             offset += valueA
-            print("new offset {0}".format(offset))
+            #print("new offset {0}".format(offset))
             i += 2
 
     return inputs
@@ -131,5 +131,5 @@ if __name__ == "__main__":
     # output = 0
 
     inputs = get_input_from_file('./20191209.txt')
-    r = walk_input(convert_input(inputs[0]), 1)
+    r = walk_input(convert_input(inputs[0]), 2)
     print(returned_values)
