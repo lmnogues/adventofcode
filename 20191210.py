@@ -118,7 +118,9 @@ if __name__ == "__main__":
     # print(asteroid_to_destroy)
     # print(len(asteroid_to_destroy))
     asteroid_to_destroy_sorted = calculate_angles(max_coord, asteroid_to_destroy)
-    count = 1
+    count = 2
     for aste in asteroid_to_destroy_sorted:
         print(count, aste)
+        if count == 200:
+            exit()
         count += 1
