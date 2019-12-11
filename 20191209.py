@@ -11,7 +11,7 @@ def get_input_from_file(file):
 
 def convert_input(inputs):
     split_inputs = inputs.split(',')
-    results = defaultdict()
+    results = defaultdict(int)
     for i in range(len(split_inputs)):
         results[i] = int(split_inputs[i])
     return results
