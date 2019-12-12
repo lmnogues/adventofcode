@@ -1,3 +1,5 @@
+from math import gcd
+
 
 class Moon():
     def __init__(self, name, x, y, z):
@@ -39,22 +41,60 @@ def compare_position(x_moon, x_self):
         return 0
 
 
-def run_pgm(moon_list, time):
-    #print("Step", 0)
+def run_part2(moon_list):
+    print("Step", 0)
+    for moon in moon_list:
+        print(moon)
+    seenX, seenY, seenZ = set(), set(), set()
+
+    stateX = tuple((moon.position[0], moon.velocity[0]) for moon in moon_list)
+    stateY = tuple((moon.position[1], moon.velocity[1]) for moon in moon_list)
+    stateZ = tuple((moon.position[2], moon.velocity[2]) for moon in moon_list)
+    seenX.add(stateX)
+    seenY.add(stateY)
+    seenZ.add(stateZ)
+    step = 0
+    while True:
+        for moon in moon_list:
+            moon.calculate_velocity(moon_list)
+        for moon in moon_list:
+            moon.apply_velocity()
+        stateX = tuple((moon.position[0], moon.velocity[0]) for moon in moon_list)
+        stateY = tuple((moon.position[1], moon.velocity[1]) for moon in moon_list)
+        stateZ = tuple((moon.position[2], moon.velocity[2]) for moon in moon_list)
+        if stateX in seenX and stateY in seenY and stateZ in seenZ:
+            break
+        seenX.add(stateX)
+        seenY.add(stateY)
+        seenZ.add(stateZ)
+        step += 1
+        if step % 1000 == 0:
+            print("Current Step :", step)
+    return calculate_least_common_multiplier([len(seenX), len(seenY), len(seenZ)])
+
+
+def run_part1(moon_list, time):
+    # print("Step", 0)
     # for moon in moon_list:
-    # print(moon)
+    #     print(moon)
     total_energy = 0
-    for _ in range(1, time+1):
+    for t in range(1, time+1):
         #print("Step", t)
         for moon in moon_list:
             moon.calculate_velocity(moon_list)
         for moon in moon_list:
             moon.apply_velocity()
             moon.calculate_total_energy()
-            # print(moon)
         total_energy = sum([moon.total_energy for moon in moon_list])
-       #print("Sum of total energy : ", )
+
     return total_energy
+
+
+def calculate_least_common_multiplier(seen):
+    lcm = seen[0]
+    for i in seen[1:]:
+        lcm = lcm*i//gcd(lcm, i)
+    return lcm
 
 
 if __name__ == "__main__":
@@ -70,16 +110,33 @@ if __name__ == "__main__":
         Moon("europa", 2, -10, -7),
         Moon("ganymede", 4, -8, 8),
         Moon("callisto", 3, 5, -1)}
-    energy = run_pgm(moon_list, 10)
+    energy = run_part1(moon_list, 10)
     assert energy == 179
+
+    moon_list_part2 = {
+        Moon("io", -1, 0, 2),
+        Moon("europa", 2, -10, -7),
+        Moon("ganymede", 4, -8, 8),
+        Moon("callisto", 3, 5, -1)}
+    rotation = run_part2(moon_list_part2)
+    assert rotation == 2772
 
     moon_list = {
         Moon("io", -8, -10, 0),
         Moon("europa", 5, 5, 10),
         Moon("ganymede", 2, -7, 3),
         Moon("callisto", 9, -8, -3)}
-    energy = run_pgm(moon_list, 100)
+    energy = run_part1(moon_list, 100)
     assert energy == 1940
+
+    moon_list_part2 = {
+        Moon("io", -8, -10, 0),
+        Moon("europa", 5, 5, 10),
+        Moon("ganymede", 2, -7, 3),
+        Moon("callisto", 9, -8, -3)}
+
+    rotation = run_part2(moon_list_part2)
+    assert rotation == 4686774924
 
     # input :
     # <x=3, y=15, z=8>
@@ -91,5 +148,13 @@ if __name__ == "__main__":
         Moon("europa", 5, -1, -2),
         Moon("ganymede", -10, 8, 2),
         Moon("callisto", 8, 4, -5)}
-    energy = run_pgm(moon_list, 1000)
+    energy = run_part1(moon_list, 1000)
     print(energy)
+
+    moon_list_part2 = {
+        Moon("io", 3, 15, 8),
+        Moon("europa", 5, -1, -2),
+        Moon("ganymede", -10, 8, 2),
+        Moon("callisto", 8, 4, -5)}
+    rotation = run_part2(moon_list_part2)
+    print(rotation)
