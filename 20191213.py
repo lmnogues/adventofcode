@@ -29,7 +29,7 @@ def convert_input(inputs):
     return results
 
 
-def run_pgm(amplifier, input):
+def run_pgm(amplifier, input, nb_expected_return):
     while amplifier.program[amplifier.cursor] != 99:
         instr = f"{amplifier.program[amplifier.cursor]:05}"
         opCode = instr[-2:]
@@ -85,7 +85,7 @@ def run_pgm(amplifier, input):
             amplifier.output_list.append(valueA)
             amplifier.output = valueA
             amplifier.cursor += 2
-            if len(amplifier.output_list) == 3:
+            if len(amplifier.output_list) == nb_expected_return:
                 return amplifier
         elif opCode == '05':
             if valueA != 0:
@@ -142,8 +142,10 @@ if __name__ == "__main__":
     paddle_xpos = 0
     move_once = False
     screen = defaultdict()
+    turn = 0
     while not intCodeProg.stop:
-        intCodeProg = run_pgm(intCodeProg, input)
+        turn += 1
+        intCodeProg = run_pgm(intCodeProg, input, 3)
         if len(intCodeProg.output_list) == 3:
             x_pos, y_pos, tile_id = intCodeProg.output_list
             intCodeProg.output_list.clear()
@@ -167,17 +169,18 @@ if __name__ == "__main__":
             elif tile_id == 3 and not move_once:
                 paddle_xpos = x_pos
                 move_once = True
+        # if turn % 1000 == 0:
+        #     prev_y = 0
+        #     print("SCREEN : ")
+        #     print(score)
+        #     for y, x in sorted(screen.keys()):
+        #         if prev_y != y:
+        #             print()
+        #         print(CHARS[screen[(y, x)]], end="")
+        #         prev_y = y
+        #     print("")
 
         # if tile_id == 3 or tile_id == 4:
-
-    prev_y = 0
-    print("SCREEN : ")
-    for y, x in sorted(screen.keys()):
-        if prev_y != y:
-            print()
-        print(CHARS[screen[(y, x)]], end="")
-        prev_y = y
-    print("")
 
     print("NB_BLOCK : ", nb_block)
     print(score)
