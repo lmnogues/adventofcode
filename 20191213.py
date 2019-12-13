@@ -80,11 +80,13 @@ def run_pgm(amplifier, input):
         elif opCode == '03':
             amplifier.program[amplifier.program[amplifier.cursor+1]+output_offset] = input
             amplifier.cursor += 2
+            return amplifier
         elif opCode == '04':
             amplifier.output_list.append(valueA)
             amplifier.output = valueA
             amplifier.cursor += 2
-            return amplifier
+            if len(amplifier.output_list) == 3:
+                return amplifier
         elif opCode == '05':
             if valueA != 0:
                 amplifier.cursor = valueB
@@ -134,38 +136,37 @@ if __name__ == "__main__":
     nb_block = 0
     score = 0
     input = 0
+    intCodeProg.program[0] = 2
     tile_list = list()
     ball_xpos = 0
     paddle_xpos = 0
     move_once = False
-    screen = dict()
+    screen = defaultdict()
     while not intCodeProg.stop:
         intCodeProg = run_pgm(intCodeProg, input)
-        x_pos = intCodeProg.output
-        intCodeProg = run_pgm(intCodeProg, input)
-        y_pos = intCodeProg.output
-        intCodeProg = run_pgm(intCodeProg, input)
-        tile_id = intCodeProg.output
+        if len(intCodeProg.output_list) == 3:
+            x_pos, y_pos, tile_id = intCodeProg.output_list
+            intCodeProg.output_list.clear()
 
-        if tile_id == 2:
-            nb_block += 1
-        if x_pos == -1 and y_pos == 0:
-            score = tile_id
-        else:
-            screen[(y_pos, x_pos)] = tile_id
-            # input = 0
-            # if tile_id == 4 and move_once:
-            #     ball_xpos = x_pos
+            if tile_id == 2:
+                nb_block += 1
+            if x_pos == -1 and y_pos == 0:
+                score = tile_id
+            else:
+                screen[(y_pos, x_pos)] = tile_id
+            input = 0
+            if tile_id == 4 and move_once:
+                ball_xpos = x_pos
 
-            #     if ball_xpos > paddle_xpos:
-            #         input = +1
-            #     if ball_xpos < paddle_xpos:
-            #         input = -1
+                if ball_xpos > paddle_xpos:
+                    input = +1
+                if ball_xpos < paddle_xpos:
+                    input = -1
 
-            #     move_once = False
-            # elif tile_id == 3 and not move_once:
-            #     paddle_xpos = x_pos
-            #     move_once = True
+                move_once = False
+            elif tile_id == 3 and not move_once:
+                paddle_xpos = x_pos
+                move_once = True
 
         # if tile_id == 3 or tile_id == 4:
 
