@@ -36,7 +36,7 @@ def part2(inputs,total):
 
 def main():
     total=2020
-    inputs=common.get_input_from_file("20201201.txt")
+    inputs=common.get_input_from_file("day1.txt")
     inputs=common.convert_input_to_integer(inputs)
     results=part1(inputs,total)
     results=part2(inputs,total)
