@@ -31,4 +31,5 @@ _ReSharper*/
 #Nuget packages folder
 packages/
 .vscode/*
+*/.vscode/*
 __pycache__/
