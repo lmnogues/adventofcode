@@ -29,7 +29,7 @@ def run_instructions(instructions,input_value=0):
         elif instr.instr in "jmp":
             index+=instr.value
         else:
-            index+=1
+            print("Unkwnon command")
             return -1,input_value        
         
         if  prev_index == len(instructions)-1:
