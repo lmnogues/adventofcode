@@ -125,7 +125,7 @@ dark violet bags contain no other bags."""
 
 def main():
     dict_luggage=dict()
-    inputs=common.get_input_from_file("day7.txt")
+    inputs=common.get_input_from_file("day07.txt")
     parse_rules(inputs,dict_luggage)
     shiny=dict_luggage.get("shiny gold")
 

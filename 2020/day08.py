@@ -71,7 +71,7 @@ acc +6"""
     assert [8] == [r[1] for r in results if r[0]==0]
 
 def main():
-    inputs=common.get_input_from_file("day8.txt")
+    inputs=common.get_input_from_file("day08.txt")
     instructions=[instruction(i) for i in inputs]
     
     assert -1,1949 == run_instructions(instructions)

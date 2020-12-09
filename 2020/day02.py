@@ -76,7 +76,7 @@ def test():
     [print(p) for p in list_password]
 
 def main():
-    inputs=common.get_input_from_file("day2.txt")    
+    inputs=common.get_input_from_file("day02.txt")    
     list_password=parse_input_to_password(inputs)
     nb=count_valid_password(list_password)
     assert nb==528

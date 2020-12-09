@@ -116,7 +116,7 @@ def test2():
     assert 4==validate_passports(passports)
 
 def main():
-    inputs=common.get_input_from_file("day4.txt")
+    inputs=common.get_input_from_file("day04.txt")
     
     passports=parse_input_into_passport(inputs)
     assert 147==validate_passports(passports)

@@ -46,7 +46,7 @@ def test():
 
 
 def main():
-    inputs=common.get_input_from_file("day3.txt")
+    inputs=common.get_input_from_file("day03.txt")
     terrain=transform_terrain_to_array(inputs)
     starting_pos=(0,0)
 

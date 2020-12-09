@@ -40,7 +40,7 @@ def test():
     assert 820 == walk_the_plane(input)
 
 def main():
-    inputs=common.get_input_from_file("day5.txt")
+    inputs=common.get_input_from_file("day05.txt")
     all_occupied=list()
     for i in inputs:
         all_occupied.append(walk_the_plane(i))

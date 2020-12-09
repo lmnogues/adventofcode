@@ -59,7 +59,7 @@ b"""
     assert 6 == count_rules_part2(groups)
 
 def main():
-    inputs=common.get_data_from_file("day6.txt")
+    inputs=common.get_data_from_file("day06.txt")
     
     groups=common.parse_data_by_groups(inputs)
     print(count_rules_part1(groups))
