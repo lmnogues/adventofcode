@@ -1,8 +1,8 @@
 import common
-import numpy
 import copy
 from collections import Counter
-
+from matplotlib import pyplot as plt
+from celluloid import Camera
 
 def check_availability(x,y,seats,part):
     list_seats=[]
@@ -57,13 +57,34 @@ def count_seats(seats):
     print(counter)
     return counter
 
+def plot_display_seats(seats,camera):    
+    colored_data=copy.deepcopy(seats)
+    for r in range(len(colored_data)):
+        row=colored_data[r]
+        for c in range(len(row)):
+            if row[c]=="L":
+                colored_data[r][c]=(255,255,255)
+            elif row[c]=="#":
+                colored_data[r][c]=(123,200,50)
+            else :
+                colored_data[r][c]=(0,0,0)
+    plt.imshow(colored_data, interpolation='nearest')
+    camera.snap()
+
 def process_inputs(inputs,nb_seats=4,part=1):
     seats = [list(y) for y in [x for x in inputs]]
-    # display_seats(seats)
-    changed=True
-    while changed:        
+    changed=True    
+    fig = plt.figure()
+    camera = Camera(fig)
+    frame=True
+    while changed:                
         changed,seats = occupied_seats(seats,nb_seats,part)
-        # display_seats(seats)   
+        if frame:
+            plot_display_seats(seats,camera)   
+        frame=not frame
+    plot_display_seats(seats,camera) 
+    animation = camera.animate()
+    plt.show()
     counter=count_seats(seats)
     return counter
 
@@ -77,11 +98,12 @@ L.LLLLL.LL
 ..L.L.....
 LLLLLLLLLL
 L.LLLLLL.L
-L.LLLLL.LL"""
+L.LLLLL.LL"""    
     counter = process_inputs(inputs.splitlines())
     assert 37 == counter["#"] 
     counter = process_inputs(inputs.splitlines(),5,2)
     assert 26 == counter["#"] 
+    
 
 def main():
     inputs=common.get_input_from_file("day11.txt")
