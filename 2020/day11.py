@@ -57,7 +57,7 @@ def count_seats(seats):
     print(counter)
     return counter
 
-def plot_display_seats(seats,camera):    
+def plot_display_seats(seats,camera,axe):    
     colored_data=copy.deepcopy(seats)
     for r in range(len(colored_data)):
         row=colored_data[r]
@@ -68,23 +68,20 @@ def plot_display_seats(seats,camera):
                 colored_data[r][c]=(123,200,50)
             else :
                 colored_data[r][c]=(0,0,0)
-    plt.imshow(colored_data, interpolation='nearest')
+    axe.imshow(colored_data, interpolation='nearest')
     camera.snap()
+    
 
-def process_inputs(inputs,nb_seats=4,part=1):
+def process_inputs(inputs,nb_seats=4,part=1,camera=None,axe=None):
     seats = [list(y) for y in [x for x in inputs]]
     changed=True    
-    fig = plt.figure()
-    camera = Camera(fig)
     frame=True
     while changed:                
         changed,seats = occupied_seats(seats,nb_seats,part)
         if frame:
-            plot_display_seats(seats,camera)   
+            plot_display_seats(seats,camera,axe)   
         frame=not frame
-    plot_display_seats(seats,camera) 
-    animation = camera.animate()
-    plt.show()
+    plot_display_seats(seats,camera,axe)  
     counter=count_seats(seats)
     return counter
 
@@ -99,18 +96,28 @@ L.LLLLL.LL
 LLLLLLLLLL
 L.LLLLLL.L
 L.LLLLL.LL"""    
-    counter = process_inputs(inputs.splitlines())
-    assert 37 == counter["#"] 
-    counter = process_inputs(inputs.splitlines(),5,2)
+
+    fig, axes  = plt.subplots(2)
+    camera = Camera(fig)
+    counter = process_inputs(inputs.splitlines(),camera=camera,axe=axes[0])
+    assert 37 == counter["#"]     
+    counter = process_inputs(inputs.splitlines(),5,2,camera,axe=axes[1])
     assert 26 == counter["#"] 
+    anim = camera.animate()
+    plt.show()
     
 
 def main():
     inputs=common.get_input_from_file("day11.txt")
-    counter = process_inputs(inputs)
+    
+    fig, axes  = plt.subplots(2)
+    camera = Camera(fig)
+    counter = process_inputs(inputs,camera=camera,axe=axes[0])
     assert 2273 == counter["#"]
-    counter = process_inputs(inputs,5,2)
+    counter = process_inputs(inputs,5,2,camera,axes[1])
     print(counter["#"])
+    anim = camera.animate()
+    plt.show()
 
 def test2():
     inputs=""".......#.
