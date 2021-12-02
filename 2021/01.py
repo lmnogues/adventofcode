@@ -31,7 +31,11 @@ def count_increase_per_group(inputs,step=3):
     return result
 
 def main():
-    inputs=common.get_integer_inputs("./2021/01.txt")
+    inputs=common.get_integer_inputs(file="./2021/01.txt")
+    count_increase(inputs)
+    count_increase_per_group(inputs)
+    
+    inputs=common.get_integer_inputs(year=2021,day=1)
     count_increase(inputs)
     count_increase_per_group(inputs)
     
@@ -43,6 +47,6 @@ def test():
 
     
 
-
+# common.get_inputs_from_site(2021,1)
 test()
 main()
