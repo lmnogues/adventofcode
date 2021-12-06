@@ -6,8 +6,11 @@ def get_data_from_site(year,day):
     response = requests.get(f"https://adventofcode.com/{year}/day/{day}/input",cookies={'session': SESSIONID})   
     return response.content.decode('UTF-8')
 
-def get_inputs_from_site(year,day):
-    return get_data_from_site(year,day).splitlines()
+def get_inputs_from_site(year,day,split="newline"):
+    if split=="newline":
+        return get_data_from_site(year,day).splitlines()
+    else:
+        return get_data_from_site(year,day).split(split)
 
 def get_data_from_file(file):
     with open(file, "r") as file_object:
@@ -26,10 +29,10 @@ def parse_data_by_groups(datas):
 def convert_input_to_integer(inputs):
     return [int(item) for item in inputs]
 
-def get_integer_inputs(file=None,year=None,day=None):
+def get_integer_inputs(file=None,year=None,day=None,split="newline"):
     if year is not None:
         if day is not None:
-            return convert_input_to_integer(get_inputs_from_site(year,day))
+            return convert_input_to_integer(get_inputs_from_site(year,day,split))
         else:
             raise ValueError("Year & Date should be set")
     if file is not None:
