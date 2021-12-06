@@ -33,7 +33,7 @@ def calculate_position(position):
     print(abs(position[0]*position[1]))
 
 def test():
-    input=b"forward 5\n\
+    input="forward 5\n\
 down 5\n\
 forward 8\n\
 up 3\n\

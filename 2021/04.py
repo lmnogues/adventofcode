@@ -85,8 +85,8 @@ def parse_grids(inputs):
     current_grid=[]
     for input in inputs[2:]:
         print(input)
-        if input !=b"":
-            current_grid.append([int(x) for x in input.strip().replace(b"  ",b" ").split(b" ")])
+        if input !="":
+            current_grid.append([int(x) for x in input.strip().replace("  "," ").split(" ")])
         if len(current_grid)==5:
             grids.append(current_grid)
             current_grid=[]
@@ -99,7 +99,7 @@ def validate_grid(grid,played_number):
                 raise
 
 def test():
-    inputs=b"7,4,9,5,11,17,23,2,0,14,21,24,10,16,13,6,15,25,12,22,18,20,8,19,3,26,1\n\
+    inputs="7,4,9,5,11,17,23,2,0,14,21,24,10,16,13,6,15,25,12,22,18,20,8,19,3,26,1\n\
 \n\
 22 13 17 11  0\n\
  8  2 23  4 24\n\
@@ -119,7 +119,7 @@ def test():
 22 11 13  6  5\n\
  2  0 12  3  7".splitlines()
 
-    random_number=[int(x) for x in inputs[0].split(b",")]
+    random_number=[int(x) for x in inputs[0].split(",")]
     grid=parse_grids(inputs)
     print(random_number)
     [display(g) for g in grid]    
@@ -128,7 +128,7 @@ def test():
 
 def main():
     inputs=common.get_inputs_from_site(2021,4)
-    random_number=[int(x) for x in inputs[0].split(b",")]
+    random_number=[int(x) for x in inputs[0].split(",")]
     grid=parse_grids(inputs)
     print(random_number)
     [display(g) for g in grid]    

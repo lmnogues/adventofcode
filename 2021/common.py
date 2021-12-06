@@ -4,7 +4,7 @@ SESSIONID="53616c7465645f5f3a9ac51f0539a42b5606c2fe0380a915d99b07a6704216895a058
 
 def get_data_from_site(year,day):
     response = requests.get(f"https://adventofcode.com/{year}/day/{day}/input",cookies={'session': SESSIONID})   
-    return response.content
+    return response.content.decode('UTF-8')
 
 def get_inputs_from_site(year,day):
     return get_data_from_site(year,day).splitlines()
