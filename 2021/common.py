@@ -1,6 +1,6 @@
 import requests
 
-SESSIONID="53616c7465645f5f3a9ac51f0539a42b5606c2fe0380a915d99b07a6704216895a05829f0b0e094eb6867375e5623c67"
+SESSIONID="53616c7465645f5f88609cee795347a9c3774024e79bbbf2249836f5e4b870c74e94fc46e62f155fc71ca95e7db89efa"
 
 def get_data_from_site(year,day):
     response = requests.get(f"https://adventofcode.com/{year}/day/{day}/input",cookies={'session': SESSIONID})   
