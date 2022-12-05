@@ -3,7 +3,7 @@ import requests
 SESSIONID="53616c7465645f5f3efd54d35ffc19e2d6212e4bfcb2862f059f6f2781e46860cd0c9da0ce8974eab8f40a598d2d0f6c76669dff73fe39eae8ee58b18f7caf5c"
 
 def get_data_from_site(year,day):
-    response = requests.get(f"https://adventofcode.com/{year}/day/{day}/input",cookies={'session': SESSIONID})   
+    response = requests.get(f"https://adventofcode.com/{year}/day/{day}/input",cookies={'session': SESSIONID},headers={'useragent':"input for jalkaru@gmail.com"})   
     return response.content.decode('UTF-8')
 
 def get_inputs_from_site(year,day,split="newline"):
